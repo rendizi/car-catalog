@@ -5,8 +5,11 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/joho/godotenv"
 	"io"
+	"log"
 	"net/http"
+	"os"
 	"regexp"
 )
 
@@ -16,7 +19,11 @@ func Get(regNum string) (db.CarInfo, error) {
 	if !regex.MatchString(regNum) {
 		return db.CarInfo{}, errors.New("wrong format of regional number")
 	}
-	url := "http://some.api/info"
+	err := godotenv.Load(".env")
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+	url := os.Getenv("API_URL")
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return db.CarInfo{}, err

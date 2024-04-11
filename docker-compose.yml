@@ -23,3 +23,4 @@ services:
       DB_PASSWORD: 1
       DB_NAME: cars
       MIGRATION_DIR: path
+      API_URL: url
