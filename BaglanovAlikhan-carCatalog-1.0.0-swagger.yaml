@@ -1,0 +1,247 @@
+openapi: 3.0.0
+servers: []
+info:
+  version: "1.0.0"
+  title: home-iot-api
+  description: The API for car catalog
+paths:
+  /cars:
+    get:
+      tags:
+        - Cars
+      description: returns registered cars based on filters
+      parameters:
+        - in: query
+          name: page
+          description: page in pagination (default 0)
+          schema:
+            type: int 
+        - in: query
+          name: limit
+          description: limit of elements in page(default 10)
+          schema:
+            type: int 
+        - in: query
+          name: regNum
+          description: registration number of car
+          schema:
+            type: string
+            format: X000XX000
+        - in: query
+          name: model
+          description: model of car
+          schema:
+            type: string
+        - in: query
+          name: mark
+          description: mark of car
+          schema:
+            type: string
+        - in: query
+          name: year
+          description: year of car
+          schema:
+            type: int 
+        - in: query
+          name: name
+          description: name of owner
+          schema:
+            type: string
+        - in: query
+          name: surname
+          description: surname of owner
+          schema:
+            type: string
+        - in: query
+          name: patronymic
+          description: patronymic of owner
+          schema:
+            type: string
+
+      responses:
+        '200':
+          description: suitable machines
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Vehicle'
+    /cars:
+  post:
+    tags:
+      - Cars
+    description: Insert new car
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              regNums:
+                type: array
+                items:
+                  type: string
+            example:
+              regNums:
+                - X123XX12
+    responses:
+      '200':
+        description: Success response
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ids:
+                  type: array
+                  items:
+                    type: integer
+            example:
+              ids:
+                - 3
+      'default':
+        description: Error response
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+            example:
+              message: ""
+
+    /cars 
+    delete:
+      tags:
+        - Cars
+      description: Delete car
+      parameters:
+        - in: query
+          name: id
+          description: id of car
+          schema:
+            type: int 
+      responses:
+        'default':
+        description: Default response
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+            example:
+              message: ""
+
+      
+    /cars 
+    put:
+      tags:
+        - Cars 
+      description: Delete car
+      parameters:
+        - in: query
+          name: page
+          description: page in pagination (default 0)
+          schema:
+            type: int 
+        - in: query
+          name: limit
+          description: limit of elements in page(default 10)
+          schema:
+            type: int 
+        - in: query
+          name: regNum
+          description: registration number of car
+          schema:
+            type: string
+            format: X000XX000
+        - in: query
+          name: model
+          description: model of car
+          schema:
+            type: string
+        - in: query
+          name: mark
+          description: mark of car
+          schema:
+            type: string
+        - in: query
+          name: year
+          description: year of car
+          schema:
+            type: int 
+        - in: query
+          name: name
+          description: name of owner
+          schema:
+            type: string
+        - in: query
+          name: surname
+          description: surname of owner
+          schema:
+            type: string
+        - in: query
+          name: patronymic
+          description: patronymic of owner
+          schema:
+            type: string
+      responses:
+        'default':
+        description: Default response
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+            example:
+              message: ""
+
+
+      
+    
+components:
+  schemas:
+    Vehicle:
+      type: object
+      properties:
+        regNum:
+          type: string
+          description: The registration number of the vehicle.
+        mark:
+          type: string
+          description: The brand of the vehicle.
+        model:
+          type: string
+          description: The model of the vehicle.
+        year:
+          type: integer
+          format: int32
+          description: The manufacturing year of the vehicle.
+        owner:
+          type: object
+          properties:
+            name:
+              type: string
+              description: The owner's first name.
+            surname:
+              type: string
+              description: The owner's last name.
+            patronymic:
+              type: string
+              description: The owner's patronymic name (if available).
+      example:
+        regNum: X123XX123
+        mark: lada
+        model: some
+        year: 2000
+        owner:
+          name: Ktoto
+          surname: You
+          patronymic: ""
