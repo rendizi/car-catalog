@@ -3,7 +3,6 @@ package db
 import (
 	"database/sql"
 	"errors"
-	"log"
 	"strconv"
 )
 
@@ -69,7 +68,6 @@ func UpdateRow(info CarInfo, id int64) error {
 
 	query = query[:len(query)-1]
 	query += " WHERE id = $1 "
-	log.Println(query)
 	vals = append([]interface{}{id}, vals...)
 	_, err := db.Exec(query, vals...)
 	if err != nil {

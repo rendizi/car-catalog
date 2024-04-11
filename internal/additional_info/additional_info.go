@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"github.com/joho/godotenv"
 	"io"
-	"log"
 	"net/http"
 	"os"
 	"regexp"
@@ -21,7 +20,7 @@ func Get(regNum string) (db.CarInfo, error) {
 	}
 	err := godotenv.Load(".env")
 	if err != nil {
-		log.Fatal(err.Error())
+		return db.CarInfo{}, err
 	}
 	url := os.Getenv("API_URL")
 	req, err := http.NewRequest("GET", url, nil)
